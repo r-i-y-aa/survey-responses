@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+        h1{
+            background-color: antiquewhite;
+            padding: 15px;
+            width: 100%;
+        }
+
+        .question {
+            background-color: antiquewhite;
+            padding: 40px;
+            margin: 40px;
+        }
+
+        #textbox, #textbox1, #textbox2 {
+            width: 100%;
+            height: 150px;
+        }
+
+        #submit {
+            padding: 20px;
+            width: 200px;
+            font-size: 24px;
+            background-color: brown;
+            color: white;
+            border: 0px;
+            border-radius: 10px;
+            margin-bottom: 40px;
+            
+        }
+        .submit {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+    <title>Document</title>
+</head>
+<body>
+<h1>The Scam Project: Survey</h1>
+<h2>Pre-Assessment Questions</h2>
+    <div class = 'question'>
+    <label>In what age group do you fit in?</label>
+    <select id = 'age-group'>
+        <option value = '18 - 25'>18 - 25</option>
+        <option value = '26-40'>26-40</option>
+        <option value = '41-60'>41-60</option>
+        <option value = '60+'>60+</option>
+        <option value = 'Prefer not to say'>Prefer not to say</option>
+    </select>
+    </div>
+
+    <div class = 'question'>
+    <label>About how many SMS messages do you receive a day?</label>
+    <select id = 'messages'>
+        <option value = '1-5'>1-5</option>
+        <option value = '6-15'>6-15</option>
+        <option value = '16-30'>16-30</option>
+        <option value = '31+'>31+</option>
+        <option value = 'Prefer not to say'>Prefer not to say</option>
+    </select>
+    </div>
+    <div class = 'question'>
+    <form>
+    <p>Have you ever received a message that you were suspicious about before?</p>
+    
+    <div>
+        <input type="radio" id="q1a" name="question1" value="a">
+        <label for="q1a">Yes</label>
+    </div>
+    
+    <div>
+        <input type="radio" id="q1b" name="question1" value="b">
+        <label for="q1b">No</label>
+    </div>
+
+    <div>
+        <input type="radio" id="q1c" name="question1" value="c">
+        <label for="q1c">Unsure</label>
+    </div>
+    </form>
+    </div>
+    <div class = 'question'>
+    <p>(Optional) Please share a message you have received in the past that you thought was
+suspicious?</p>
+<input id = 'textbox'>
+</div>
+<div class = 'question'>
+    <p>In general, what patterns do you look for when evaluating a suspicious message?</p>
+<input id = 'textbox1'>
+</div>
+<h2>Post-Assessment Questions</h2>
+<div class = 'question'>
+<p>On a scale from 1-5 (1 = Very hard, 5 = Very easy) how easy was it to navigate this application?</p>
+<input type="range" min="1" max="5" value="3" id = 'scale1'>
+<p id = 'reading'>3</p>
+</div>
+
+<div class = 'question'>
+<p>On a scale from 1-5 (1 = Very hard, 5 = Very easy) how easy was it to understand explanations
+of scam messages from this application?</p>
+<input type="range" min="1" max="5" value="3"  id = 'scale2'>
+<p id = 'reading1'>3</p>
+</div class = 'question'>
+
+<div class = 'question'>
+<p>(Optional) If you checked a message using this application, on a scale from 1-5 (1 = Very hard,
+5 = Very easy), how easily could you understand the results?</p>
+<input type="range" min="1" max="5" value="3"  id = 'scale3'>
+<p id = 'reading2'>3</p>
+</div>
+
+<div class = 'question'>
+<p>(Optional) If you checked a message using this application, on a scale from 1-5 (1 = Very hard,
+5 = Very easy), how easily could you trust the results?</p>
+<input type="range" min="1" max="5" value="3"  id = 'scale4'>
+<p id = 'reading3'>3</p>
+</div>
+
+<div class = 'question'>
+<p>On a scale from 1-5 (1 = Not likely, 5 = Very likely) how likely would you use this application or
+refer it to another?</p>
+<input type="range" min="1" max="5" value="3" id = 'scale5'>
+<p id = 'reading4'>3</p>
+</div>
+
+<div class = 'question'>
+    <p>What additional feedback or questions do you have for this application?</p>
+<input id = 'textbox2'>
+</div>
+
+<div class = 'submit'>
+<button id = 'submit'>Submit</button>
+</div>
+<script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyAt_CnJaFj0kan2piR2CcJsdrDKFmQn55M",
+    authDomain: "survey-data-2981f.firebaseapp.com",
+    projectId: "survey-data-2981f",
+    storageBucket: "survey-data-2981f.firebasestorage.app",
+    messagingSenderId: "663061375663",
+    appId: "1:663061375663:web:cfc0514f6249ae98e4825a"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+</script>
+<script>
+    const age_group = document.getElementById('age-group');
+const messages = document.getElementById('messages');
+const submit = document.getElementById('submit');
+const sample = document.getElementById('textbox');
+const patterns = document.getElementById('textbox1');
+const navigate = document.getElementById('scale1');
+const understanding = document.getElementById('scale2');
+const op_understanding = document.getElementById('scale3');
+const trust = document.getElementById('scale4');
+const refer = document.getElementById('scale5');
+const thoughts = document.getElementById('textbox2');
+submit.addEventListener('click', function(){
+let suspicious = document.querySelector('input[name="question1"]:checked');
+try {
+            db.collection("response").add({
+            preq1: age_group.value,
+            preq2: messages.value,
+            preq3: suspicious ? suspicious.value : '',
+            preq4: sample ? sample.value : '',
+            preq5: patterns ? patterns.value : '',
+            postq1: parseInt(navigate.value),
+            postq2: parseInt(understanding.value),
+            postq3: parseInt(op_understanding.value),
+            postq4: parseInt(trust.value),
+            postq5: parseInt(refer.value),
+            postq6: thoughts ? thoughts.value : ''
+
+        });
+        alert('Submitted Successfully!');
+
+       }
+       catch (error){
+        alert('Error reporting message');
+        console.error('Error reporting message', error);
+       }
+})
+function updateVal(scale, reading) {
+    let paragraph = document.getElementById(reading);
+    paragraph.textContent = parseInt(scale.value);
+}
+
+navigate.addEventListener('input', () => updateVal(navigate, 'reading'))
+understanding.addEventListener('input',() => updateVal(understanding, 'reading1'))
+op_understanding.addEventListener('input',() => updateVal(op_understanding, 'reading2'))
+trust.addEventListener('input',() => updateVal(trust, 'reading3'))
+refer.addEventListener('input',() => updateVal(refer, 'reading4'))
+
+</script>
+</body>
+
+</html>
