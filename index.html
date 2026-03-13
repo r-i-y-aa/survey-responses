@@ -108,11 +108,35 @@ suspicious?</p>
 <input id = 'textbox'>
 </div>
 <div class = 'question'>
-    <p>In general, what patterns do you look for when evaluating a suspicious message?</p>
-<input id = 'textbox1'>
+    <form>
+    <p>In general, what patterns do you look for when evaluating a suspicious message? Select all that apply:</p>
+    
+    <div>
+        <input type="checkbox" id="q1a" name="question1" value="Capital Letters">
+        <label for="q1a">Capital Letters</label>
+    </div>
+    
+    <div>
+        <input type="checkbox" id="q1b" name="patterns" value="Repeated Characters">
+        <label for="q1b">Repeated Characters</label>
+    </div>
+
+    <div>
+        <input type="checkbox" id="q1c" name="patterns" value="Odd Symbols">
+        <label for="q1c">Odd Symbols</label>
+    </div>
+    <div>
+        <input type="checkbox" id="q1c" name="patterns" value="Unknown Names">
+        <label for="q1c">Unknown Names</label>
+    </div>
+        <div>
+        <input type="checkbox" id="q1d" name="patterns" value="Urgent Tone">
+        <label for="q1d">Urgent Tone</label>
+    </div>
+    </form>
 </div>
 <h2>App Demo</h2>
-<p>Before continuing to the next questions, please visit the link below <strong> in another tab </strong> </strong>provided below to access my project, The Scam Project. Feel free to explore in any way you wish. If you choose to use the scam detector provided, it is requested that you take note of your experience in response to upcoming questions. <strong> Warning: answers will not be preserved if the link is opened in the same tab.</strong></p>
+<p>Before continuing to the next questions, please visit the link below to access my project, The Scam Project. Feel free to explore in any way you wish. If you choose to use the scam detector provided, it is requested that you take note of your experience in response to upcoming questions.</p>
 <div id = 'link'><a href = 'https://spam-project-ylde.onrender.com/' target="_blank" rel="noopener noreferrer"> The Scam Project</a></div>
 <h2>Post-Assessment Questions</h2>
 <div class = 'question'>
@@ -129,14 +153,14 @@ of scam messages from this application?</p>
 </div class = 'question'>
 
 <div class = 'question'>
-<p>(Optional) If you checked a message using this application, on a scale from 1-5 (1 = Very hard,
+<p>If you checked a message using this application, on a scale from 1-5 (1 = Very hard,
 5 = Very easy), how easily could you understand the results?</p>
 <input type="range" min="1" max="5" value="3"  id = 'scale3'>
 <p id = 'reading2'>3</p>
 </div>
 
 <div class = 'question'>
-<p>(Optional) If you checked a message using this application, on a scale from 1-5 (1 = Very hard,
+<p>If you checked a message using this application, on a scale from 1-5 (1 = Very hard,
 5 = Very easy), how easily could you trust the results?</p>
 <input type="range" min="1" max="5" value="3"  id = 'scale4'>
 <p id = 'reading3'>3</p>
@@ -176,13 +200,18 @@ refer it to another?</p>
 const messages = document.getElementById('messages');
 const submit = document.getElementById('submit');
 const sample = document.getElementById('textbox');
-const patterns = document.getElementById('textbox1');
 const navigate = document.getElementById('scale1');
 const understanding = document.getElementById('scale2');
 const op_understanding = document.getElementById('scale3');
 const trust = document.getElementById('scale4');
 const refer = document.getElementById('scale5');
 const thoughts = document.getElementById('textbox2');
+    const patterns = [];
+    const checkboxes = document.querySelectorAll('input[name="patterns"]:checked');
+
+    checkboxes.forEach((checkbox) => {
+        patterns.push(checkbox.value);
+    });
 submit.addEventListener('click', function(){
 let suspicious = document.querySelector('input[name="question1"]:checked');
 try {
@@ -191,7 +220,7 @@ try {
             preq2: messages.value,
             preq3: suspicious ? suspicious.value : '',
             preq4: sample ? sample.value : '',
-            preq5: patterns ? patterns.value : '',
+            preq5: patterns,
             postq1: parseInt(navigate.value),
             postq2: parseInt(understanding.value),
             postq3: parseInt(op_understanding.value),
