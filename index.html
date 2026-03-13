@@ -206,13 +206,14 @@ const op_understanding = document.getElementById('scale3');
 const trust = document.getElementById('scale4');
 const refer = document.getElementById('scale5');
 const thoughts = document.getElementById('textbox2');
-    const patterns = [];
-    const checkboxes = document.querySelectorAll('input[name="patterns"]:checked');
 
-    checkboxes.forEach((checkbox) => {
+submit.addEventListener('click', function(){
+let patterns = [];
+const checkboxes = document.querySelectorAll('input[name="patterns"]:checked');
+
+checkboxes.forEach((checkbox) => {
         patterns.push(checkbox.value);
     });
-submit.addEventListener('click', function(){
 let suspicious = document.querySelector('input[name="question1"]:checked');
 try {
             db.collection("response").add({
